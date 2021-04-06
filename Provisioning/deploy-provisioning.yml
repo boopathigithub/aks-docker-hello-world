@@ -121,3 +121,20 @@ steps:
       csmParametersFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/aks-log-analytics-parameters.json
       deploymentMode: Incremental
       deploymentName: 'deploy-pod-alerting'
+
+## Metric alerting for pod failures in AKS cluster
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Provisioning Pod Alerting'  
+    inputs:
+      deploymentScope: Resource Group      
+      resourceGroupName: $(ResourceGroup)
+      azureResourceManagerConnection: ${{ parameters.azureSubscription }}
+      subscriptionId: $(SubscriptionId)
+      action: Create Or Update Resource Group
+      location: $(ResourceGroupLocation)
+      templateLocation: Linked artifact
+      csmFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/pod-failure-alert.json
+      csmParametersFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/pod-failure-alert-parameters.json
+      deploymentMode: Incremental
+      deploymentName: 'deploy-pod-alerting'

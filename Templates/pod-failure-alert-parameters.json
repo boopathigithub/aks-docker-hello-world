@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "metricAlerts_Pods_in_failed_state_name": {
+            "value": "Pods in failed state for docker-hello-world-cluster CI-4"
+        },
+        "managedclusters_externalid": {
+            "value": "/subscriptions/<subscriptionid>/resourceGroups/docker-hello-world-rg/providers/microsoft.containerservice/managedclusters/docker-hello-world-cluster"
+        },
+        "actiongroups_externalid": {
+            "value": "/subscriptions/<subscriptionid>/resourceGroups/docker-hello-world-rg/providers/microsoft.insights/actiongroups/hello-world-action-group"
+        }
+    }
+}

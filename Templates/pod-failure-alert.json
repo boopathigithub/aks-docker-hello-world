@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "metricAlerts_Pods_in_failed_state_name": {
+            "type": "String"
+        },
+        "managedclusters_externalid": {
+            "type": "String"
+        },
+        "actiongroups_externalid": {
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "microsoft.insights/metricAlerts",
+            "apiVersion": "2018-03-01",
+            "name": "[parameters('metricAlerts_Pods_in_failed_state_name')]",
+            "location": "global",
+            "properties": {
+                "description": "Pod status monitoring. Check insights here: https://portal.azure.com/#resource/subscriptions/subscriptionid/resourcegroups/docker-hello-world-rg/providers/microsoft.containerservice/managedclusters/docker-hello-world-cluster/infrainsights?feature.citracealert=Failed%20Pod%20counts",
+                "severity": 3,
+                "enabled": true,
+                "scopes": [
+                    "[parameters('managedclusters_externalid')]"
+                ],
+                "evaluationFrequency": "PT1M",
+                "windowSize": "PT5M",
+                "criteria": {
+                    "allOf": [
+                        {
+                            "threshold": 1,
+                            "name": "Metric1",
+                            "metricNamespace": "Insights.Container/pods",
+                            "metricName": "podCount",
+                            "dimensions": [
+                                {
+                                    "name": "Kubernetes namespace",
+                                    "operator": "StartsWith",
+                                    "values": [
+                                        "Default"
+                                    ]
+                                },
+                                {
+                                    "name": "phase",
+                                    "operator": "Include",
+                                    "values": [
+                                        "Failed"
+                                    ]
+                                }
+                            ],
+                            "operator": "GreaterThanOrEqual",
+                            "timeAggregation": "Average",
+                            "criterionType": "StaticThresholdCriterion"
+                        }
+                    ],
+                    "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria"
+                },
+                "autoMitigate": true,
+                "targetResourceType": "microsoft.containerservice/managedclusters",
+                "actions": [
+                    {
+                        "actionGroupId": "[parameters('actiongroups_externalid')]",
+                        "webHookProperties": {}
+                    }
+                ]
+            }
+        }
+    ]
+}
