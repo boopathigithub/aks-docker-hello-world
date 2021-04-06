@@ -21,6 +21,8 @@ steps:
       xmlTransformationRules: 
       jsonTargetFiles: $(ArtifactName)-templates/*-parameters.json
 
+## Resource Group
+
   - task: AzureResourceManagerTemplateDeployment@3
     displayName: 'Provisioning Resource Group'    
     inputs:
@@ -35,3 +37,19 @@ steps:
       deploymentMode: Incremental
       deploymentName: 'deploy-resource-group'
 
+##Azure container registry
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Provisioning azure container registry'  
+    inputs:
+      deploymentScope: Resource Group      
+      resourceGroupName: $(ResourceGroup)
+      azureResourceManagerConnection: ${{ parameters.azureSubscription }}
+      subscriptionId: $(SubscriptionId)
+      action: Create Or Update Resource Group
+      location: $(ResourceGroupLocation)
+      templateLocation: Linked artifact
+      csmFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/acr.json
+      csmParametersFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/acr-parameters.json
+      deploymentMode: Incremental
+      deploymentName: 'deploy-acr'

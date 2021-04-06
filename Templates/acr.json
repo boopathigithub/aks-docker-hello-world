@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerRegsitry": {
+            "type": "string",
+            "defaultValue": "dokercontainerregistry",
+            "metadata": {
+                "description": "Azure Container Registry"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [{
+        "name": "[parameters('containerRegsitry')]",
+        "type": "Microsoft.ContainerRegistry/registries",
+        "apiVersion": "2019-05-01",
+        "location": "[resourceGroup().location]",
+        "tags": {
+            "name": "Docker-Hello-World",
+            "environment": "Testing"
+        },
+        "sku": {
+            "name": "Basic"
+        },
+        "properties": {
+            "adminUserEnabled": true
+        }
+    }],
+    "outputs": {}
+}
