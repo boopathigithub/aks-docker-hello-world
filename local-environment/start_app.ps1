@@ -1,0 +1,1 @@
+docker-compose.exe up --scale hello-world=3 -d
