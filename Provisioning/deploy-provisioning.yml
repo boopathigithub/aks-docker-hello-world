@@ -104,3 +104,20 @@ steps:
       csmParametersFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/log-workspace-parameters.json
       deploymentMode: Incremental
       deploymentName: 'deploy-log-workspace'
+
+## Enable AKS monitoring and Insights
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Enable AKS alerting'  
+    inputs:
+      deploymentScope: Resource Group      
+      resourceGroupName: $(ResourceGroup)
+      azureResourceManagerConnection: ${{ parameters.azureSubscription }}
+      subscriptionId: $(SubscriptionId)
+      action: Create Or Update Resource Group
+      location: $(ResourceGroupLocation)
+      templateLocation: Linked artifact
+      csmFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/aks-log-analytics.json
+      csmParametersFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/aks-log-analytics-parameters.json
+      deploymentMode: Incremental
+      deploymentName: 'deploy-pod-alerting'

@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aksResourceId": {
+            "value": "/subscriptions/<subscriptionid>/resourcegroups/docker-hello-world-rg/providers/Microsoft.ContainerService/managedClusters/docker-hello-world-cluster"
+        },
+        "workspaceResourceId": {
+            "value": "/subscriptions/<subscriptionid>/resourcegroups/docker-hello-world-rg/providers/microsoft.operationalinsights/workspaces/hello-world-logAnalyticsWorkspace"
+        }
+    }
+}
