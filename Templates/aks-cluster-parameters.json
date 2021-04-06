@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "clusterName": {
+            "value": "docker-hello-world-cluster"
+        },
+        "dnsPrefix": {
+            "value": "docker-dns"
+        },
+        "osDiskSizeGB": {
+            "value": 30
+        },
+        "agentCount": {
+            "value": 3
+        },
+        "agentVMSize": {
+            "value": "Standard_DS2_v2"
+        },
+        "osType": {
+            "value": "Linux"
+        }
+    }
+}

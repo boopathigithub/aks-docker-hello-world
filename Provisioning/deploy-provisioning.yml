@@ -53,3 +53,20 @@ steps:
       csmParametersFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/acr-parameters.json
       deploymentMode: Incremental
       deploymentName: 'deploy-acr'
+
+##Azure AKS cluster
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Provisioning aks cluster'  
+    inputs:
+      deploymentScope: Resource Group      
+      resourceGroupName: $(ResourceGroup)
+      azureResourceManagerConnection: ${{ parameters.azureSubscription }}
+      subscriptionId: $(SubscriptionId)
+      action: Create Or Update Resource Group
+      location: $(ResourceGroupLocation)
+      templateLocation: Linked artifact
+      csmFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/aks-cluster.json
+      csmParametersFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/aks-cluster-parameters.json
+      deploymentMode: Incremental
+      deploymentName: 'deploy-aks-group'
