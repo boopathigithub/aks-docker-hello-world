@@ -1,0 +1,28 @@
+parameters:
+  - name: k8ServiceConnection
+
+steps:
+
+  - download: current
+    displayName: 'Download Manifests artifacts'
+    artifact: $(ArtifactName)-manifests
+
+  - task: KubernetesManifest@0
+    displayName: deploy-Manifests    
+    inputs:
+      action: deploy
+      kubernetesServiceConnection: ${{ parameters.k8ServiceConnection }}
+      namespace: default
+      manifests: |
+        $(Pipeline.Workspace)/$(ArtifactName)-manifests/deployment.yml
+        $(Pipeline.Workspace)/$(ArtifactName)-manifests/service.yml
+
+  - task: KubernetesManifest@0
+    displayName: scale-hello-world-pods
+    inputs:
+      action: scale
+      kubernetesServiceConnection: ${{ parameters.k8ServiceConnection }}
+      namespace: default
+      kind: deployment
+      name: hello-world-deployment
+      replicas: 3      

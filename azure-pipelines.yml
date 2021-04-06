@@ -29,7 +29,22 @@ stages:
               steps:
                 - template: 'Provisioning/deploy-provisioning.yml'
                   parameters: 
-                    azureSubscription: 'Azure-subscription'      
+                    azureSubscription: 'Azure-subscription'
+
+  - stage: 'Deploy_Kubernetes'
+    displayName: 'Deploy Kubernetes Manifests' 
+    dependsOn: Deploy_Provisioning
+    condition: succeeded()
+    jobs:
+      - deployment: deploy_hello_world_Manifest
+        environment: aks-testing
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: 'Provisioning/deploy-application.yml'
+                  parameters: 
+                    k8ServiceConnection: 'kubernetes-service' 
 
 
                   
