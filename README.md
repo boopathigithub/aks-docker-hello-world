@@ -10,7 +10,7 @@ Azure cloud environment setup and deployment of hello world application involves
 2.	Cloud provisioning
 3.	Cloud deployment
 
-# Build and Test
+## Build and Test
 1. Publish the Manifest, provisioning, and ARM templates
 
 ## Cloud provisioning
@@ -25,18 +25,18 @@ Azure cloud environment setup and deployment of hello world application involves
 8. Enable AKS appplication insights / monitoring using the ARM template
 9. Setup metric alert to alert when Pod instances are in Failed state to send alerts to action group set up in step 6
 
-# Application deployment
+## Application deployment
 1. Create the Kubernetes deployment manifest file
 2. Create the Kubernetes service manifest file with "Load Balancer" type
 3. Deploy the Manifest files using the KubernetesManifest@0 task
 4. Scale out the deployment using the KubernetesManifest@0 task
 
-# Run the application
+## Run the application
 1. Load balanced hello world application will be accessed through "external" load balancer IP created by the Azure kubernetes service
 
 URL: http://<Load-Balancer-Ip>:8088
 
-# Monitoring
+## Monitoring
 
 Below given Azure services are used for monitoring purpose
 
@@ -46,7 +46,7 @@ https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insigh
 
 
 
-## Local environment provisioning
+# Local environment provisioning
 1. create docker compose file
 2. Script to run the docker container
 
