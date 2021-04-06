@@ -1,0 +1,36 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - template: 'Variables/variables.yml'
+
+stages:
+  - stage: 'PublishFiles'
+    displayName: 'Build, And Publish Files'
+    jobs:
+      - job:
+        displayName: 'publish template files'
+        steps:
+          - template: 'Provisioning/build-pipeline.yml'
+
+  - stage: 'Deploy_Provisioning'
+    displayName: 'Deploy Provisioning' 
+    dependsOn: PublishFiles
+    condition: succeeded()
+    jobs:
+      - deployment: deploy_hello_world_provisioning
+        environment: aks-testing
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: 'Provisioning/deploy-provisioning.yml'
+                  parameters: 
+                    azureSubscription: 'Azure-subscription'      
+
+
+                  
+

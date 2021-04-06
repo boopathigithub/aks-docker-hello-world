@@ -1,0 +1,37 @@
+parameters:
+  - name: azureSubscription
+
+steps:
+  - download: current
+    displayName: 'Download provisioning artifacts'
+    artifact: $(ArtifactName)-provisioning
+
+  - download: current
+    displayName: 'Download Templates artifacts'
+    artifact: $(ArtifactName)-templates
+
+  - download: current
+    displayName: 'Download manifests artifacts'
+    artifact: $(ArtifactName)-manifests
+
+  - task: FileTransform@2
+    displayName: 'Replace parameters from variables'
+    inputs:    
+      folderPath: $(Pipeline.Workspace)
+      xmlTransformationRules: 
+      jsonTargetFiles: $(ArtifactName)-templates/*-parameters.json
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Provisioning Resource Group'    
+    inputs:
+      deploymentScope: Subscription
+      azureResourceManagerConnection: ${{ parameters.azureSubscription }}
+      subscriptionId: $(SubscriptionId)
+      action: Create Or Update Resource Group
+      location: $(ResourceGroupLocation)
+      templateLocation: Linked artifact
+      csmFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/resource-group.json
+      csmParametersFile: $(Pipeline.Workspace)/$(ArtifactName)-templates/resource-group-parameters.json
+      deploymentMode: Incremental
+      deploymentName: 'deploy-resource-group'
+

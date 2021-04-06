@@ -1,0 +1,12 @@
+steps:
+  - publish: $(System.DefaultWorkingDirectory)/Provisioning
+    displayName: 'Publish provisioning files'
+    artifact: $(ArtifactName)-provisioning
+
+  - publish: $(System.DefaultWorkingDirectory)/Templates
+    displayName: 'Publish Templates files'
+    artifact: $(ArtifactName)-templates
+
+  - publish: $(System.DefaultWorkingDirectory)/Manifests
+    displayName: 'Publish Manifest files'
+    artifact: $(ArtifactName)-manifests

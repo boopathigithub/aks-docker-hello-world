@@ -1,0 +1,32 @@
+variables:
+  - name: ResourceGroup
+    value: docker-hello-world-rg
+  - name: ResourceGroupLocation
+    value: westeurope
+  - name: ArtifactName
+    value: hello-world
+  - name: SubscriptionId
+    value: <subscriptionId>
+  - name: azureContainerService
+    value: hello-world-container-service
+  
+
+## Resource group parameters
+
+  - name: parameters.resourceGroupName.value
+    value: $(ResourceGroup)
+  - name: parameters.resourceGroupLocation.value
+    value: $(ResourceGroupLocation)
+
+## Azure container Registry
+
+  - name: containerRegistryName
+    value: dokercontainerregistry
+  - name: azureContainerRegistry
+    value: $(containerRegistryName).azurecr.io
+
+  - name: parameters.containerRegistry.value
+    value: $(containerRegistryName)
+
+
+

@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceGroupName": {
+            "type": "string",
+            "defaultValue": "docker-hello-world-rg",
+            "metadata": {
+                "description": "Resource group Name"
+            }
+        },
+        "resourceGroupLocation": {
+            "type": "string",
+            "defaultValue": "westeurope",
+            "metadata": {
+                "description": "Resource group Location"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [{
+        "name": "[parameters('resourceGroupName')]",
+        "type": "Microsoft.Resources/resourceGroups",
+        "apiVersion": "2019-10-01",
+        "location": "[parameters('resourceGroupLocation')]",
+        "dependsOn": [
+        ],
+        "tags": {
+            "name": "Docker-Hello-World",
+            "environment": "Testing"
+        }
+    }],
+    "outputs": {}
+}
